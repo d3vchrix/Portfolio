@@ -1,4 +1,4 @@
-# Chad's Portfolio
+# Christian Portfolio
 
 A modern, responsive, and animated portfolio built with **Vite**, **React**, **Framer Motion**, and **Tailwind CSS**. Features a sleek black and white design with smooth animations, mobile-first responsive layout, and seamless GitHub integration.
 
