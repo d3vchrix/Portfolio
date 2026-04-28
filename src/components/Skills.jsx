@@ -3,16 +3,28 @@ import { motion } from 'framer-motion'
 const Skills = () => {
   const skillCategories = [
     {
+      category: 'Designs',
+      skills: ['Photoshop', 'Figma', 'Canva'],
+    },
+    {
       category: 'Frontend',
-      skills: ['React', 'Ajax', 'TypeScript', 'JavaScript'],
+      skills: ['Bootstrap', 'HTML', 'CSS', 'React', 'Vite'],
     },
     {
       category: 'Backend',
-      skills: ['Node.js', 'C#', 'SQL Server'],
+      skills: ['ASP.Net', 'C#', 'SQL Server', 'MVC', 'Ajax'],
     },
     {
       category: 'Tools & Cloud',
-      skills: ['Git', 'Azure', 'Google Console', 'CI/CD'],
+      skills: ['Git', 'Azure', 'Google Console', 'ReCaptcha'],
+    },
+    {
+      category: 'AI Tools',
+      skills: ['ChatGpt', 'Gemini', 'Claude'],
+    },
+    {
+      category: 'Deployment',
+      skills: ['Azure', 'Github', 'CI/CD'],
     },
   ]
 
@@ -104,10 +116,10 @@ const Skills = () => {
             className="mt-12 md:mt-20 grid grid-cols-1 md:grid-cols-2 gap-8"
           >
             {[
-              { name: 'Frontend Development', level: 95 },
-              { name: 'Backend Development', level: 85 },
-              { name: 'UI/UX Design', level: 80 },
-              { name: 'DevOps & Deployment', level: 75 },
+              { name: 'Frontend Development', level: 80 },
+              { name: 'Backend Development', level: 80 },
+              { name: 'UI/UX Design', level: 95 },
+              { name: 'DevOps & Deployment', level: 45 },
             ].map((skill, index) => (
               <motion.div
                 key={index}

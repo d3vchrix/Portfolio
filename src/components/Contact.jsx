@@ -124,7 +124,7 @@ const Contact = () => {
               <div>
                 <h3 className="text-xl md:text-2xl font-bold mb-4">Quick Links</h3>
                 <a
-                  href="https://drive.google.com/file/d/1DH8rWqzmdFXKTKsEfwNA82BCErCU3z0x/view?usp=sharing"
+                  href="https://drive.google.com/file/d/1iHGgw25SajH4GJPFaW_2075EinGNXwtr/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center space-x-2 px-4 py-2 md:px-6 md:py-3 bg-white bg-opacity-10 rounded hover:bg-opacity-20 transition-all"

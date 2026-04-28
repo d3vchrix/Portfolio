@@ -5,31 +5,25 @@ const Projects = () => {
     {
       title: 'E-Commerce Platform',
       description: 'Full-stack e-commerce solution with React, Node.js, and MongoDB',
-      tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
+      tags: ['ASP.Net', 'C#', 'SQL', 'Razor'],
       link: '#',
       color: 'from-gray-600 to-gray-800',
     },
     {
-      title: 'Task Management App',
-      description: 'Collaborative task management with real-time updates',
-      tags: ['React', 'Firebase', 'Tailwind CSS'],
+      title: 'Landing Pages',
+      description: 'Responsive designs of various company with automated contact',
+      tags: ['ASP.Net', 'C#', 'SMTP', 'Razor', 'Azure', 'SendGrid'],
       link: '#',
-      color: 'from-gray-700 to-gray-900',
+      color: 'from-gray-600 to-gray-800',
     },
-    {
-      title: 'AI Chat Application',
-      description: 'Real-time chat application powered by AI',
-      tags: ['React', 'OpenAI', 'WebSocket', 'Express'],
+            {
+      title: 'Web Designs',
+      description: 'Creative web designs that meets clients expectations ',
+      tags: ['Figma', 'Photoshop', 'Adobe'],
       link: '#',
-      color: 'from-gray-500 to-gray-700',
+      color: 'from-gray-600 to-gray-800',
     },
-    {
-      title: 'Portfolio CMS',
-      description: 'Headless CMS for managing portfolio content',
-      tags: ['Next.js', 'Strapi', 'GraphQL'],
-      link: '#',
-      color: 'from-gray-600 to-black',
-    },
+    
   ]
 
   const containerVariants = {
