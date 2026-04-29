@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import emailjs from '@emailjs/browser'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ const Contact = () => {
     message: '',
   })
   const [submitted, setSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -17,15 +19,36 @@ const Contact = () => {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Here you would typically send the form data to a backend service
-    console.log('Form submitted:', formData)
-    setSubmitted(true)
-    setTimeout(() => {
-      setSubmitted(false)
-      setFormData({ name: '', email: '', message: '' })
-    }, 3000)
+    setIsLoading(true)
+    
+    const currentTime = new Date().toLocaleString()
+
+    try {
+      await emailjs.send(
+        'service_86m0lbp',
+        'template_ilqs1ew',
+        {
+          name: formData.name,
+          reply_to: formData.email,
+          message: formData.message,
+          time: currentTime,
+        },
+        'eYoVpBQAl7cdmqmCY'
+      )
+
+      setSubmitted(true)
+      setTimeout(() => {
+        setSubmitted(false)
+        setFormData({ name: '', email: '', message: '' })
+      }, 3000)
+    } catch (error) {
+      console.error('Failed to send email:', error)
+      alert('Something went wrong. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const containerVariants = {
@@ -182,17 +205,18 @@ const Contact = () => {
                 />
               </div>
 
-              <motion.button
+             <motion.button
                 type="submit"
+                disabled={isLoading}
                 className={`w-full py-2 md:py-3 rounded font-semibold transition-all ${
                   submitted
                     ? 'bg-green-500 text-white'
                     : 'bg-white text-black hover:bg-gray-200'
-                }`}
-                whileHover={!submitted ? { scale: 1.02 } : {}}
-                whileTap={!submitted ? { scale: 0.98 } : {}}
+                } ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                whileHover={!submitted && !isLoading ? { scale: 1.02 } : {}}
+                whileTap={!submitted && !isLoading ? { scale: 0.98 } : {}}
               >
-                {submitted ? '✓ Message Sent!' : 'Send Message'}
+                {isLoading ? 'Sending...' : submitted ? '✓ Message Sent!' : 'Send Message'}
               </motion.button>
             </motion.form>
           </motion.div>
