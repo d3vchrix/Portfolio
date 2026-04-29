@@ -10,33 +10,72 @@ const Contact = () => {
   })
   const [submitted, setSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [validationErrors, setValidationErrors] = useState({})
+
+  // Input validation function
+  const validateInput = (value, type) => {
+    const trimmed = value.trim()
+    if (!trimmed) return 'This field is required'
+    
+    if (type === 'email') {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(trimmed)) return 'Invalid email address'
+    }
+    
+    if (type === 'message' && trimmed.length < 10) {
+      return 'Message must be at least 10 characters'
+    }
+    
+    if (type === 'name' && trimmed.length < 2) {
+      return 'Name must be at least 2 characters'
+    }
+    
+    return null
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({
       ...prev,
-      [name]: value,
+      [name]: value.substring(0, 500), // Limit input length
     }))
+    // Clear validation error on change
+    if (validationErrors[name]) {
+      setValidationErrors(prev => ({
+        ...prev,
+        [name]: null,
+      }))
+    }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setIsLoading(true)
     
-    const currentTime = new Date().toLocaleString()
+    // Validate all fields
+    const errors = {}
+    errors.name = validateInput(formData.name, 'name')
+    errors.email = validateInput(formData.email, 'email')
+    errors.message = validateInput(formData.message, 'message')
+    
+    if (Object.values(errors).some(err => err !== null)) {
+      setValidationErrors(errors)
+      return
+    }
+    
+    setIsLoading(true)
 
     try {
       await emailjs.send(
-        'service_86m0lbp',
-        'template_ilqs1ew',
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         {
-          client_name: formData.name,
-          client_email: formData.email,
+          client_name: formData.name.trim(),
+          client_email: formData.email.trim(),
           project_interest: "General Inquiry",
-          message: formData.message,
+          message: formData.message.trim(),
           time: new Date().toLocaleString()
         },
-        'eYoVpBQAl7cdmqmCY'
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       )
 
       setSubmitted(true)
@@ -175,9 +214,15 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full bg-white bg-opacity-5 border border-white border-opacity-20 rounded px-4 py-2 md:px-4 md:py-3 text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all"
+                  maxLength="100"
+                  className={`w-full bg-white bg-opacity-5 border rounded px-4 py-2 md:px-4 md:py-3 text-white placeholder-gray-500 focus:outline-none transition-all ${
+                    validationErrors.name ? 'border-red-500 border-opacity-100' : 'border-white border-opacity-20 focus:border-white'
+                  }`}
                   placeholder="Your name"
                 />
+                {validationErrors.name && (
+                  <p className="text-red-400 text-sm mt-1">{validationErrors.name}</p>
+                )}
               </div>
 
               <div>
@@ -188,9 +233,15 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full bg-white bg-opacity-5 border border-white border-opacity-20 rounded px-4 py-2 md:px-4 md:py-3 text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all"
+                  maxLength="255"
+                  className={`w-full bg-white bg-opacity-5 border rounded px-4 py-2 md:px-4 md:py-3 text-white placeholder-gray-500 focus:outline-none transition-all ${
+                    validationErrors.email ? 'border-red-500 border-opacity-100' : 'border-white border-opacity-20 focus:border-white'
+                  }`}
                   placeholder="your@email.com"
                 />
+                {validationErrors.email && (
+                  <p className="text-red-400 text-sm mt-1">{validationErrors.email}</p>
+                )}
               </div>
 
               <div>
@@ -200,10 +251,16 @@ const Contact = () => {
                   value={formData.message}
                   onChange={handleChange}
                   required
+                  maxLength="500"
                   rows="5"
-                  className="w-full bg-white bg-opacity-5 border border-white border-opacity-20 rounded px-4 py-2 md:px-4 md:py-3 text-white placeholder-gray-500 focus:outline-none focus:border-white transition-all resize-none"
+                  className={`w-full bg-white bg-opacity-5 border rounded px-4 py-2 md:px-4 md:py-3 text-white placeholder-gray-500 focus:outline-none transition-all resize-none ${
+                    validationErrors.message ? 'border-red-500 border-opacity-100' : 'border-white border-opacity-20 focus:border-white'
+                  }`}
                   placeholder="Your message..."
                 />
+                {validationErrors.message && (
+                  <p className="text-red-400 text-sm mt-1">{validationErrors.message}</p>
+                )}
               </div>
 
              <motion.button

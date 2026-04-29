@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 import confetti from 'canvas-confetti'; // The confetti library!
 
+
 // Reusable Star Rating Component
 const StarRating = ({ rating, setRating }) => {
   return (
