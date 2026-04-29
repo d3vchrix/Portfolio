@@ -30,10 +30,11 @@ const Contact = () => {
         'service_86m0lbp',
         'template_ilqs1ew',
         {
-          name: formData.name,
-          reply_to: formData.email,
+          client_name: formData.name,
+          client_email: formData.email,
+          project_interest: "General Inquiry",
           message: formData.message,
-          time: currentTime,
+          time: new Date().toLocaleString()
         },
         'eYoVpBQAl7cdmqmCY'
       )
